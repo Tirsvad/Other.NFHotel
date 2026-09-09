@@ -1,0 +1,17 @@
+@*
+    Indlæsningstilstand med sidens form bevaret, så layoutet ikke hopper når data kommer.
+    UI-Spec afsnit 4: ingen spinner midt på skærmen.
+*@
+
+<div class="stack-sm" role="status" aria-busy="true" aria-label="Loading">
+    @for (var row = 0; row < Rows; row++)
+    {
+        <span class="skeleton"></span>
+    }
+</div>
+
+@code {
+    /// <summary>Antal pladsholderlinjer. Sæt den så den svarer til det indhold der er på vej.</summary>
+    [Parameter]
+    public int Rows { get; set; } = 3;
+}

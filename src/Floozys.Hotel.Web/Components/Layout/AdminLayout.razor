@@ -1,0 +1,40 @@
+@inherits LayoutComponentBase
+
+@*
+    Personalets arbejdsværktøj: sidemenu til venstre, indhold til højre, tættere rytme
+    end den offentlige side.
+
+    Båndet øverst siger åbent at adgangskontrollen mangler. Auth er udskudt
+    (Fase1-Scope.md), og indtil Identity kommer, kan enhver der kender adressen åbne
+    disse skærme. Det skal stå på siden, ikke kun i en README.
+*@
+
+<a class="skip-link" href="#content">Skip to content</a>
+
+<div class="admin-shell">
+    <AdminNav />
+
+    <div class="admin-main">
+        <div class="admin-header">
+            <p class="admin-notice" role="status">
+                <span aria-hidden="true">&#9888;</span>
+                Access control is not in place yet — anyone with the address can view and
+                change the data on these screens.
+            </p>
+        </div>
+
+        <div class="page" id="content">
+            @Body
+        </div>
+    </div>
+</div>
+
+@*
+    Sidste net under fejlhåndteringen: fanger det ingen ViewModel kunne oversætte til en
+    fejlkode. Teksten er neutral og afslører aldrig en exception (Conventions.md).
+*@
+<div id="blazor-error-ui" data-nosnippet>
+    Something went wrong.
+    <a href="." class="reload">Reload</a>
+    <span class="dismiss">&#128473;</span>
+</div>

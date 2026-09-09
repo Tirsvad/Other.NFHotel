@@ -1,0 +1,26 @@
+@* Router. Finder sider under både Components/Pages/ og Features/ — feature-først (A-13). *@
+
+@*
+    Standardlayoutet er det offentlige. Admin-siderne vælger selv AdminLayout med
+    @@layout, så en ny side aldrig ved et uheld arver personalets sidemenu.
+*@
+
+<Router AppAssembly="typeof(Program).Assembly">
+    <Found Context="routeData">
+        <RouteView RouteData="routeData" DefaultLayout="typeof(Layout.PublicLayout)" />
+        <FocusOnNavigate RouteData="routeData" Selector="h1" />
+    </Found>
+    <NotFound>
+        <LayoutView Layout="typeof(Layout.PublicLayout)">
+            <PageTitle>Page not found</PageTitle>
+            <div class="page-narrow stack">
+                <h1 class="title">This page doesn't exist</h1>
+                <p class="lede">That address leads nowhere. Start again from the front page, or go straight to booking.</p>
+                <div class="row">
+                    <a class="btn btn-primary" href="/">Go to the front page</a>
+                    <a class="btn btn-secondary" href="/book">Book your stay</a>
+                </div>
+            </div>
+        </LayoutView>
+    </NotFound>
+</Router>

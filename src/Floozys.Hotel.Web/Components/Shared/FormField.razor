@@ -1,0 +1,58 @@
+@*
+    Et formularfelt: label, input, fejltekst, hjælpetekst — altid i den rækkefølge.
+
+    Selve input'et leveres af kaldestedet i ChildContent, så komponenten hverken skal
+    kende feltets type eller binde til noget. Til gengæld ejer den etiketten, så intet
+    input kan ende uden en <label> (UI-Spec afsnit 4).
+
+    Kaldestedet giver input'et id="@For" og kan pege aria-describedby på
+    "{For}-hint" og aria-errormessage på "{For}-error".
+*@
+
+<div class="field">
+    <label class="field-label" for="@For">
+        @Label@if (IsRequired)
+        {<span class="field-required" title="Required">*</span>}
+    </label>
+
+    @ChildContent
+
+    @if (!string.IsNullOrWhiteSpace(Error))
+    {
+        <span class="field-error" id="@($"{For}-error")" role="alert">@Error</span>
+    }
+
+    @if (!string.IsNullOrWhiteSpace(Hint))
+    {
+        <span class="field-hint" id="@($"{For}-hint")">@Hint</span>
+    }
+</div>
+
+@code {
+    /// <summary>Etiketten over feltet. Dansk, uden kolon.</summary>
+    [Parameter]
+    [EditorRequired]
+    public string Label { get; set; } = string.Empty;
+
+    /// <summary>Id'et på input'et i <see cref="ChildContent"/>. Binder etiketten til feltet.</summary>
+    [Parameter]
+    [EditorRequired]
+    public string For { get; set; } = string.Empty;
+
+    /// <summary>Selve input'et — <c>&lt;input class="field-input"&gt;</c>, en select eller lignende.</summary>
+    [Parameter]
+    [EditorRequired]
+    public RenderFragment? ChildContent { get; set; }
+
+    /// <summary>Færdig dansk fejltekst. Tom betyder at feltet er i orden.</summary>
+    [Parameter]
+    public string? Error { get; set; }
+
+    /// <summary>Valgfri hjælpetekst, fx forventet format.</summary>
+    [Parameter]
+    public string? Hint { get; set; }
+
+    /// <summary>Markerer feltet som påkrævet med en stjerne ved etiketten.</summary>
+    [Parameter]
+    public bool IsRequired { get; set; }
+}

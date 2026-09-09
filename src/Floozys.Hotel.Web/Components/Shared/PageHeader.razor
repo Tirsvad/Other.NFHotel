@@ -1,0 +1,38 @@
+@*
+    Sidens overskrift med plads til handlinger til højre.
+
+    Den skriver sidens eneste <h1>, som også er det element FocusOnNavigate flytter
+    fokus til ved sideskift — så en skærmlæser får sidens navn først.
+*@
+
+<header class="page-header">
+    <div class="stack-sm">
+        <h1 class="title">@Title</h1>
+        @if (!string.IsNullOrWhiteSpace(Subtitle))
+        {
+            <p class="muted">@Subtitle</p>
+        }
+    </div>
+
+    @if (Actions is not null)
+    {
+        <div class="page-header-actions">
+            @Actions
+        </div>
+    }
+</header>
+
+@code {
+    /// <summary>Sidens navn. Bliver sidens <c>h1</c>.</summary>
+    [Parameter]
+    [EditorRequired]
+    public string Title { get; set; } = string.Empty;
+
+    /// <summary>Valgfri underrubrik der forklarer hvad siden er til.</summary>
+    [Parameter]
+    public string? Subtitle { get; set; }
+
+    /// <summary>Valgfrie handlinger — typisk en primær knap, fx "Opret booking".</summary>
+    [Parameter]
+    public RenderFragment? Actions { get; set; }
+}

@@ -1,0 +1,39 @@
+@page "/Error"
+@using System.Diagnostics
+
+@*
+    Central fejlside for uventede exceptions (UseExceptionHandler). Viser aldrig
+    exception-typen eller stakken — kun en neutral besked og et sporings-id personalet kan
+    give videre til support (Conventions.md: "Vis brugeren neutrale fejlbeskeder").
+*@
+
+<PageTitle>Error</PageTitle>
+
+<div class="page-narrow stack">
+    <h1 class="title">Something went wrong</h1>
+
+    <p class="lede">We couldn't complete that action. Please try again, or contact support if it keeps happening.</p>
+
+    @if (ShowRequestId)
+    {
+        <p class="muted">
+            <strong>Reference ID:</strong> <code>@RequestId</code>
+        </p>
+    }
+
+    <div class="row">
+        <a class="btn btn-primary" href="/">Back to the front page</a>
+    </div>
+</div>
+
+@code {
+    [CascadingParameter]
+    private HttpContext? HttpContext { get; set; }
+
+    private string? RequestId { get; set; }
+
+    private bool ShowRequestId => !string.IsNullOrEmpty(RequestId);
+
+    protected override void OnInitialized() =>
+        RequestId = Activity.Current?.Id ?? HttpContext?.TraceIdentifier;
+}

@@ -1,0 +1,33 @@
+@*
+    Statusmærkat for domænets tilstande. Sæt præcis én af de tre parametre.
+
+    Komponenten indeholder ingen oversættelse selv: teksten kommer fra DisplayText og
+    klassen fra BadgeClass, så samme status altid ser og lyder ens på tværs af skærme.
+*@
+
+@if (this.BookingStatus is not null)
+{
+    <span class="@BadgeClass.For(this.BookingStatus.Value)">@DisplayText.Describe(this.BookingStatus.Value)</span>
+}
+else if (this.RoomStatus is not null)
+{
+    <span class="@BadgeClass.For(this.RoomStatus.Value)">@DisplayText.Describe(this.RoomStatus.Value)</span>
+}
+else if (this.HousekeepingStatus is not null)
+{
+    <span class="@BadgeClass.For(this.HousekeepingStatus.Value)">@DisplayText.Describe(this.HousekeepingStatus.Value)</span>
+}
+
+@code {
+    /// <summary>Bookingens livscyklustilstand. Sæt kun denne, hvis mærkatet viser en booking.</summary>
+    [Parameter]
+    public BookingStatus? BookingStatus { get; set; }
+
+    /// <summary>Rummets bookbarhed. Sæt kun denne, hvis mærkatet viser et rums driftstilstand.</summary>
+    [Parameter]
+    public RoomStatus? RoomStatus { get; set; }
+
+    /// <summary>Rummets rengørings- og servicestand. Sæt kun denne, hvis mærkatet viser rengøring.</summary>
+    [Parameter]
+    public HousekeepingStatus? HousekeepingStatus { get; set; }
+}

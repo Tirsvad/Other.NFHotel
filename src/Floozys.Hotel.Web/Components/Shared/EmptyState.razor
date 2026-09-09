@@ -1,0 +1,48 @@
+@*
+    Fælles "ingen data"-tilstand, så hver liste ikke opfinder sin egen tomme skærm.
+
+    UI-Spec afsnit 4: en tom tilstand skal forklare hvad brugeren kan gøre — ikke bare
+    konstatere at der ingen data er. Derfor har den plads til en handling i ChildContent.
+*@
+
+<div class="empty">
+    <span class="empty-icon" aria-hidden="true">&#8212;</span>
+    <p class="empty-title">@Title</p>
+    @if (!string.IsNullOrWhiteSpace(Text))
+    {
+        <p class="empty-text">@Text</p>
+    }
+    @if (ChildContent is not null)
+    {
+        <div class="row">
+            @ChildContent
+        </div>
+    }
+</div>
+
+@code {
+    /// <summary>Hovedbeskeden, fx "Ingen rum matcher filteret".</summary>
+    [Parameter]
+    [EditorRequired]
+    public string Title { get; set; } = DisplayText.NoData;
+
+    /// <summary>Uddybningen: hvad brugeren kan gøre for at få noget at se.</summary>
+    [Parameter]
+    public string? Description { get; set; }
+
+    /// <summary>
+    /// Ældre navn for <see cref="Description"/>.
+    /// </summary>
+    /// <remarks>
+    /// TODO: fjernes når de sidste skærme er skrevet om til <see cref="Description"/>.
+    /// </remarks>
+    [Parameter]
+    public string? Hint { get; set; }
+
+    /// <summary>Valgfri handling, fx en knap der rydder filteret eller opretter en post.</summary>
+    [Parameter]
+    public RenderFragment? ChildContent { get; set; }
+
+    /// <summary>Den uddybning der faktisk vises.</summary>
+    private string? Text => string.IsNullOrWhiteSpace(Description) ? Hint : Description;
+}

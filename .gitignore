@@ -430,3 +430,13 @@ appsettings.Development.json
 appsettings.Local.json
 *.local.json
 secrets.json
+
+##########################################################
+# Python
+##########################################################
+.venv/
+venv/
+*.egg-info/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/

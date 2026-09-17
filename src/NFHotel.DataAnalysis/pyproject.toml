@@ -1,0 +1,27 @@
+[project]
+name = "nfhotel-data-analysis"
+version = "0.1.0"
+description = "Hotel booking analysis for NF Hotel, structured with clean architecture layers."
+requires-python = ">=3.11"
+dependencies = [
+    "pandas>=2.0",
+    "openpyxl>=3.1",
+    "matplotlib>=3.8",
+]
+
+[project.optional-dependencies]
+dev = ["pytest>=8.0"]
+
+[project.scripts]
+nfhotel-analysis = "nfhotel_data_analysis.presentation.cli:main"
+
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["nfhotel_data_analysis*"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
